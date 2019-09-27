@@ -1,7 +1,13 @@
 require'slack-ruby-bot'
+require 'logger'
 
+PID_FILE = "#{__dir__}/tmp/pid".freeze
+LOG_FILE = "/var/log/ruby-aircon-bot/ruby-aircon-bot.log".freeze
+
+SlackRubyBot::Client.logger.level = Logger::WARN
 SlackRubyBot.configure do |config|
   config.aliases = ['ルビィ']
+  config.logger = Logger.new(LOG_FILE)
 end
 
 class RubyAirconBot < SlackRubyBot::Bot
@@ -39,6 +45,14 @@ class RubyAirconBot < SlackRubyBot::Bot
       client.say({channel: data.channel, text: @@error_message})
     end
   end
+end
+
+File.open(PID_FILE, 'w') do |f|
+  f.write($$)
+end
+
+at_exit do
+  File.delete(PID_FILE) if File.exist?(PID_FILE)
 end
 
 RubyAirconBot.run
