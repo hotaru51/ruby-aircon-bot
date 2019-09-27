@@ -1,0 +1,9 @@
+"/var/log/ruby-aircon-bot/ruby-aircon-bot.log" {
+    rotate 7
+    daily
+    dateext
+    missingok
+    copytruncate
+    compress
+    delaycompress
+}
