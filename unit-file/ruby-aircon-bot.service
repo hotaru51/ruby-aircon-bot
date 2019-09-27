@@ -1,0 +1,15 @@
+[Unit]
+Description=Ruby aircon bot
+After=network.target
+
+[Service]
+Type=simple
+User=aircon-bot
+EnvironmentFile=/etc/systemd/ruby-aircon-bot_env
+WorkingDirectory=/home/aircon-bot/ruby-aircon-bot
+PIDFile=/home/aircon-bot/ruby-aircon-bot/tmp/pid
+ExecStart=/home/aircon-bot/.rbenv/shims/bundle exec ruby ruby_aircon_bot.rb
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
