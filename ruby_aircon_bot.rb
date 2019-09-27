@@ -1,5 +1,6 @@
 require'slack-ruby-bot'
 require 'logger'
+require 'dotenv'
 
 PID_FILE = "#{__dir__}/tmp/pid".freeze
 LOG_FILE = "/var/log/ruby-aircon-bot/ruby-aircon-bot.log".freeze
@@ -46,6 +47,8 @@ class RubyAirconBot < SlackRubyBot::Bot
     end
   end
 end
+
+Dotenv.load
 
 File.open(PID_FILE, 'w') do |f|
   f.write($$)
